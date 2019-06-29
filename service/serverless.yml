@@ -1,0 +1,83 @@
+service: csp-reports
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      inMemory: true
+      seed: true
+      migrate: true
+      convertEmptyValues: true
+      noStart: true
+    seed:
+      dev:
+        sources:
+          - table: ${self:service}-${opt:stage, self:provider.stage}
+            sources: [dynamodb/dev.json]
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    # DYNAMODB_TABLE: csp-reports
+    IS_OFFLINE: true # Local testing
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  create:
+    handler: src/handler.insert
+    events:
+      - http:
+          path: report
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    csp-reports:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: date
+            AttributeType: S
+          - AttributeName: time
+            AttributeType: S
+          # - AttributeName: blocked-uri
+          #   AttributeType: S
+          # - AttributeName: document-uri
+          #   AttributeType: S
+          # - AttributeName: disposition
+          #   AttributeType: S
+          # - AttributeName: effective-directive
+          #   AttributeType: S
+          # - AttributeName: original-policy
+          #   AttributeType: S
+          # - AttributeName: referrer
+          #   AttributeType: S
+          # - AttributeName: script-sample
+          #   AttributeType: S
+          # - AttributeName: status-code
+          #   AttributeType: S
+          # - AttributeName: violated-directive
+          #   AttributeType: S
+        KeySchema:
+          - AttributeName: date
+            KeyType: HASH
+          - AttributeName: time
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:service}-${opt:stage, self:provider.stage}
