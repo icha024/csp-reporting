@@ -13,7 +13,7 @@ custom:
       seed: true
       migrate: true
       convertEmptyValues: true
-      noStart: true
+      # noStart: true
     seed:
       dev:
         sources:
@@ -25,7 +25,6 @@ provider:
   runtime: nodejs8.10
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
-    # DYNAMODB_TABLE: csp-reports
     IS_OFFLINE: true # Local testing
   iamRoleStatements:
     - Effect: Allow
@@ -52,9 +51,9 @@ resources:
       DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
-          - AttributeName: date
+          - AttributeName: dateId
             AttributeType: S
-          - AttributeName: time
+          - AttributeName: timeId
             AttributeType: S
           # - AttributeName: blocked-uri
           #   AttributeType: S
@@ -75,9 +74,9 @@ resources:
           # - AttributeName: violated-directive
           #   AttributeType: S
         KeySchema:
-          - AttributeName: date
+          - AttributeName: dateId
             KeyType: HASH
-          - AttributeName: time
+          - AttributeName: timeId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:service}-${opt:stage, self:provider.stage}

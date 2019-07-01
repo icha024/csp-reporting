@@ -23,17 +23,17 @@ module.exports.insert = (event, context, callback) => {
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
     Item: {
-      date: dateId,
-      time: timeId,
-      'blocked-uri': body['blocked-uri'],
-      'document-uri': body['document-uri'],
+      'dateId': dateId,
+      'timeId': timeId,
+      'blockedUri': body['blocked-uri'],
+      'documentUri': body['document-uri'],
       'disposition': body['disposition'],
-      'effective-directive': body['effective-directive'],
-      'original-policy': body['original-policy'],
+      'effectiveDirective': body['effective-directive'],
+      'originalPolicy': body['original-policy'],
       'referrer': body['referrer'],
-      'script-sample': body['script-sample'],
-      'status-code': body['status-code'],
-      'violated-directive': body['violated-directive'],
+      'scriptSample': body['script-sample'],
+      'statusCode': body['status-code'],
+      'violatedDirective': body['violated-directive'],
     },
   };
 
