@@ -1,4 +1,8 @@
 # CSP Reporting Service
+```
+sls dynamodb start
+IS_OFFLINE=true sls offline -s dev
+```
 
 ## Local DynamoDB
 sls dynamodb start
