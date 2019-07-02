@@ -9,7 +9,7 @@ module.exports.insert = (event, context, callback) => {
   const timeId = `${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}.${date.getUTCMilliseconds()}`;
 
   const body = JSON.parse(event.body)['csp-report'];
-  // console.log('body is: ' + JSON.stringify(body));
+  console.log('body is: ' + JSON.stringify(body));
   if (body === undefined) {
     console.error('Validation Failed');
     callback(null, {
@@ -52,8 +52,11 @@ module.exports.insert = (event, context, callback) => {
 
     // create a response
     const response = {
+      headers: {
+        "version" : "3"
+      },
       statusCode: 204,
-      body: 'OK',
+      body: '',
     };
     callback(null, response);
   });

@@ -1,6 +1,7 @@
-service: csp-reports
+service: serverless-csp-reports
 
 plugins:
+  - serverless-plugin-canary-deployments
   - serverless-dynamodb-local
   - serverless-offline
 
@@ -23,10 +24,20 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
+  region: eu-west-1
+  memorySize: 128
+  logRetentionInDays: 14
+  versionFunctions: true
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
-    IS_OFFLINE: true # Local testing
+    # IS_OFFLINE: true # Local testing
   iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - codedeploy:*
+      Resource:
+        # - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:function:serverless-csp-reports-*"
+        - "*"
     - Effect: Allow
       Action:
         - dynamodb:Query
@@ -43,10 +54,13 @@ functions:
           path: report
           method: post
           cors: true
+    deploymentSettings:
+      type: Linear10PercentEvery1Minute
+      alias: Live
 
 resources:
   Resources:
-    csp-reports:
+    cspReports:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
@@ -55,24 +69,6 @@ resources:
             AttributeType: S
           - AttributeName: timeId
             AttributeType: S
-          # - AttributeName: blocked-uri
-          #   AttributeType: S
-          # - AttributeName: document-uri
-          #   AttributeType: S
-          # - AttributeName: disposition
-          #   AttributeType: S
-          # - AttributeName: effective-directive
-          #   AttributeType: S
-          # - AttributeName: original-policy
-          #   AttributeType: S
-          # - AttributeName: referrer
-          #   AttributeType: S
-          # - AttributeName: script-sample
-          #   AttributeType: S
-          # - AttributeName: status-code
-          #   AttributeType: S
-          # - AttributeName: violated-directive
-          #   AttributeType: S
         KeySchema:
           - AttributeName: dateId
             KeyType: HASH
