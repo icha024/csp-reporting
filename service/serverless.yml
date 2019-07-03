@@ -48,15 +48,27 @@ provider:
 
 functions:
   create:
-    handler: src/handler.insert
+    handler: src/handle-insert.insert
     events:
       - http:
-          path: report
+          path: reports
           method: post
+          private: false
           cors: true
-    deploymentSettings:
-      type: Linear10PercentEvery1Minute
-      alias: Live
+    # deploymentSettings:
+    #   type: Linear10PercentEvery1Minute
+    #   alias: Live
+  fetch:
+    handler: src/handle-fetch.fetch
+    events:
+      - http:
+          path: /reports
+          method: get
+          private: false
+          cors: true
+    # deploymentSettings:
+    #   type: Linear10PercentEvery1Minute
+    #   alias: Live
 
 resources:
   Resources:

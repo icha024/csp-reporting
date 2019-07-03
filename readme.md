@@ -4,6 +4,23 @@ sls dynamodb start
 IS_OFFLINE=true sls offline -s dev
 ```
 
+## Insert data
+```
+{
+  "csp-report": {
+    "document-uri": "http://example.com/signup.html",
+    "referrer": "",
+    "blocked-uri": "http://example.com/css/style.css",
+    "violated-directive": "style-src cdn.example.com",
+    "original-policy": "default-src 'none'; style-src cdn.example.com; report-uri /_/csp-reports"
+  }
+}
+```
+
+## Query data
+http://localhost:3000/reports?date=2019-07-04
+https://4nneqiwsi2.execute-api.eu-west-1.amazonaws.com/dev/reports?date=2016-07-04
+
 ## Local DynamoDB
 sls dynamodb start
 http://localhost:8000/shell/

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto Currency Pricing</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+      <h3>Check CSP Reports</h3>
+      <input v-model="reportDate" placeholder="report date" v-on:input="fetchData()">
+      <button v-on:click="fetchData()">View reports</button>
+      <p> Reports:</p>
+      <p>{{ cspReports }}</p>
+  </div>
+  <script src="./src/main.js"></script>
+</body>
+</html>
