@@ -14,26 +14,54 @@ plugins:
 #             - '**/*.js'
 #             - '**/*.map'
 
-custom:
-  assets:
-    targets:
-      - bucket:
-          Ref: ClianzCspReports
-        files:
-          - source: dist/
 
 resources:
-  # AWS CloudFormation Template
-  ClianzCspReports:
-    MyBucket:
+  Resources:
+    ClianzCspReports:
       Type: AWS::S3::Bucket
       Properties:
+        BucketName: clianz-csp-reports
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
 
+custom:
+  assets:
+    # resolveReferences: false
+    targets:
+      - bucket: #ClianzCspReports
+          Ref: ClianzCspReports
+        files:
+          - source: dist/
+            globs:
+              - '**/*.js'
+              - '**/*.map'
+              - '**/*.html'
+
+# custom:
+#   assets:
+#     targets:
+#       - bucket:
+#           Ref: ClianzCspReports
+#         files:
+#           - source: dist/
+
+
+# resources:
+#   Resources:
+#     S3TranscriptionBucket:
+#       Type: 'AWS::S3::Bucket'
+#       Properties:
+#         BucketName: clianz-csp-reports
+
 provider:
   name: aws
   runtime: nodejs8.10
   region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource:
+        - 'arn:aws:s3:::ClianzCspReports/*'
