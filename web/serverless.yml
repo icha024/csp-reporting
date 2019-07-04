@@ -1,0 +1,39 @@
+service: serverless-csp-reports
+
+plugins:
+  - serverless-s3-deploy
+
+# custom:
+#   assets:
+#     targets:
+#       - bucket: clianz-csp-reports
+#         files:
+#         - source: dist/
+#           globs:
+#             - '**/*.html'
+#             - '**/*.js'
+#             - '**/*.map'
+
+custom:
+  assets:
+    targets:
+      - bucket:
+          Ref: ClianzCspReports
+        files:
+          - source: dist/
+
+resources:
+  # AWS CloudFormation Template
+  ClianzCspReports:
+    MyBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: eu-west-1

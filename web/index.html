@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Crypto Currency Pricing</title>
+  <title>Content Security Report Console</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-tables-2@1.4.70/dist/vue-tables-2.min.js"></script>
 </head>
 <body>
   <div id="app">
       <h3>Check CSP Reports</h3>
       <input v-model="reportDate" placeholder="report date" v-on:input="fetchData()">
       <button v-on:click="fetchData()">View reports</button>
-      <p> Reports:</p>
-      <p>{{ cspReports }}</p>
+      <!--<p> Reports:</p>
+      <p>{{ tableData }}</p>-->
+
+      <v-client-table :columns="columns" :data="tableData" :options="options">
+        <a slot="uri" slot-scope="props" target="_blank" :href="props.row.uri" class="glyphicon glyphicon-eye-open"></a>
+
+        <div slot="child_row" slot-scope="props">
+          The link to {{props.row.name}} is <a :href="props.row.uri">{{props.row.uri}}</a>
+        </div>
+
+      </v-client-table>
   </div>
   <script src="./src/main.js"></script>
 </body>

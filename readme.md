@@ -2,6 +2,7 @@
 ```
 sls dynamodb start
 IS_OFFLINE=true sls offline -s dev
+sls s3deploy
 ```
 
 ## Insert data
