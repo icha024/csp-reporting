@@ -1,9 +1,9 @@
 'use strict';
 
 const dynamodb = require('./dynamodb');
-const appVersion = 2;
+const appVersion = 1;
 
-const padZero (origVal) => {
+const padZero = (origVal) => {
   return ('0' + (origVal + 1)).slice(-2);
 }
 

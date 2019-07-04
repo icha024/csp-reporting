@@ -19,7 +19,7 @@ IS_OFFLINE=true sls offline -s dev
 
 ## Query data
 http://localhost:3000/reports?date=2019-07-04
-https://4nneqiwsi2.execute-api.eu-west-1.amazonaws.com/dev/reports?date=2016-07-04
+https://4nneqiwsi2.execute-api.eu-west-1.amazonaws.com/dev/reports?date=2019-07-04
 
 ## Local DynamoDB
 sls dynamodb start

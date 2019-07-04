@@ -65,7 +65,8 @@ functions:
           path: /reports
           method: get
           private: false
-          cors: true
+          cors:
+            origin: '*'
     # deploymentSettings:
     #   type: Linear10PercentEvery1Minute
     #   alias: Live

@@ -40,7 +40,7 @@ module.exports.fetch = (event, context, callback) => {
         console.error(error);
         callback(null, {
           statusCode: error.statusCode || 500,
-          headers: { 'Content-Type': 'text/plain' },
+          headers: { 'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*' },
           body: 'error',
         });
         return;
@@ -52,6 +52,7 @@ module.exports.fetch = (event, context, callback) => {
           version: appVersion,
         },
         statusCode: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify(data.Items),
       };
       callback(null, response);

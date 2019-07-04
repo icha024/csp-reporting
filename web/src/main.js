@@ -2,7 +2,7 @@
 new Vue({
   el: '#app',
   data: {
-    reportDate: '2019-06-29',
+    reportDate: '2019-07-04',
     cspReports: ''
   },
   methods: {
