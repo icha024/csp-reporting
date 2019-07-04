@@ -1,19 +1,7 @@
-service: serverless-csp-reports
+service: serverless-csp-reports-ui
 
 plugins:
   - serverless-s3-deploy
-
-# custom:
-#   assets:
-#     targets:
-#       - bucket: clianz-csp-reports
-#         files:
-#         - source: dist/
-#           globs:
-#             - '**/*.html'
-#             - '**/*.js'
-#             - '**/*.map'
-
 
 resources:
   Resources:
@@ -28,32 +16,14 @@ resources:
 
 custom:
   assets:
-    # resolveReferences: false
     targets:
-      - bucket: #ClianzCspReports
-          Ref: ClianzCspReports
+      - bucket: clianz-csp-reports
         files:
           - source: dist/
             globs:
               - '**/*.js'
               - '**/*.map'
               - '**/*.html'
-
-# custom:
-#   assets:
-#     targets:
-#       - bucket:
-#           Ref: ClianzCspReports
-#         files:
-#           - source: dist/
-
-
-# resources:
-#   Resources:
-#     S3TranscriptionBucket:
-#       Type: 'AWS::S3::Bucket'
-#       Properties:
-#         BucketName: clianz-csp-reports
 
 provider:
   name: aws

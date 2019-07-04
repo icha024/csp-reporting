@@ -1,8 +1,17 @@
 # CSP Reporting Service
+
+### Service
 ```
 sls dynamodb start
 IS_OFFLINE=true sls offline -s dev
 sls s3deploy
+```
+
+### Web
+```
+npm run build
+SLS_DEBUG=* sls deploy -v
+SLS_DEBUG=* sls s3deploy -v
 ```
 
 ## Insert data
@@ -20,7 +29,7 @@ sls s3deploy
 
 ## Query data
 http://localhost:3000/reports?date=2019-07-04
-https://4nneqiwsi2.execute-api.eu-west-1.amazonaws.com/dev/reports?date=2019-07-04
+https://hixk92a1ab.execute-api.eu-west-1.amazonaws.com/dev/reports?date=2019-07-04
 
 ## Local DynamoDB
 sls dynamodb start
@@ -49,17 +58,4 @@ docClient.query(params, function(err, data) {
     if (err) ppJson(err); // an error occurred
     else ppJson(data); // successful response
 });
-```
-
-## Sample
-```
-{
-  "csp-report": {
-    "document-uri": "http://example.com/signup.html",
-    "referrer": "",
-    "blocked-uri": "http://example.com/css/style.css",
-    "violated-directive": "style-src cdn.example.com",
-    "original-policy": "default-src 'none'; style-src cdn.example.com; report-uri /_/csp-reports"
-  }
-}
 ```

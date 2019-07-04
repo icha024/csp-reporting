@@ -4,13 +4,13 @@ const dynamodb = require('./dynamodb');
 const appVersion = 1;
 
 const padZero = (origVal) => {
-  return ('0' + (origVal + 1)).slice(-2);
+  return ('0' + (origVal)).slice(-2);
 }
 
 module.exports.insert = (event, context, callback) => {
   const date = new Date();
-  const dateId = `${date.getUTCFullYear()}-${padZero(date.getUTCMonth())}-${padZero(date.getUTCDate())}`;
-  const timeId = `${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}.${date.getUTCMilliseconds()}`;
+  const dateId = `${date.getUTCFullYear()}-${padZero(date.getUTCMonth() + 1)}-${padZero(date.getUTCDate())}`;
+  const timeId = `${padZero(date.getUTCHours())}:${padZero(date.getUTCMinutes())}:${padZero(date.getUTCSeconds())}.${padZero(date.getUTCMilliseconds())}`;
 
   const body = JSON.parse(event.body)['csp-report'];
   // console.log('body is: ' + JSON.stringify(body));

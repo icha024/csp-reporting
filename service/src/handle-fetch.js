@@ -27,7 +27,7 @@ module.exports.fetch = (event, context, callback) => {
   }
 
   var params = {
-    TableName: 'serverless-csp-reports-dev',
+    TableName: process.env.DYNAMODB_TABLE,
     KeyConditionExpression: 'dateId = :d1', // a string representing a constraint on the attribute
     ExpressionAttributeValues: { // a map of substitutions for all attribute values
       ':d1': dateQuery,

@@ -10,9 +10,11 @@
 <body>
   <div id="app">
       <h3>Check CSP Reports</h3>
-      <input v-model="reportDate" placeholder="report date" v-on:input="fetchData()">
+      <p>Report Date: <input v-model="reportDate" placeholder="report date"></p>
+      <p>API Key: <input v-model="apiKey" placeholder="API key"></p>
       <button v-on:click="fetchData()">View reports</button>
       <!--<p> Reports:</p>
+      <p>{{ apiKey }}</p>
       <p>{{ tableData }}</p>-->
 
       <v-client-table :columns="columns" :data="tableData" :options="options">

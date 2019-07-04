@@ -1,4 +1,4 @@
-service: serverless-csp-reports
+service: serverless-csp-reports-service
 
 plugins:
   - serverless-plugin-canary-deployments
@@ -31,6 +31,16 @@ provider:
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
     # IS_OFFLINE: true # Local testing
+  apiKeys:
+    - csp-report-api-key # you can hide it in a serverless variable
+  usagePlan:
+    quota:
+      limit: 5000
+      offset: 2
+      period: MONTH
+    throttle:
+      burstLimit: 200
+      rateLimit: 100
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -64,7 +74,7 @@ functions:
       - http:
           path: /reports
           method: get
-          private: false
+          private: true
           cors:
             origin: '*'
     # deploymentSettings:
